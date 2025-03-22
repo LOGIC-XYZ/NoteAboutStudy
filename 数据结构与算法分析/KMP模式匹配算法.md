@@ -1,6 +1,6 @@
 -- 减少朴素匹配里不必要的回溯，所以需要在查找字符串前，先对要查找的字符串做一个分析，以减少查找的难度并提升速度
 
-```
+```cpp
 /* 通过计算返回子串T的next数组。 */
 void get_next(String T, int *next)
 {
@@ -47,7 +47,7 @@ int Index_KMP(String S, String T, int pos)
 ```
 
 子串的首位与后续的某些字符相等，也可以省略，故改良为以下
-```
+```cpp
 /* 求模式串T的next函数修正值并存入数组nextval */
 void get_nextval(String T, int *nextval)
 {
