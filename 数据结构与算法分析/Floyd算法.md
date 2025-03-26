@@ -5,7 +5,7 @@
 ### **Floyd算法的核心思想**
 设想每个点都可能成为路径上的“中间点”，如果经过该点能够缩短两点之间的距离，就更新路径。
 
-```cpp
+```c
 /* Floyd算法，求网图G中各顶点v到其余顶点w的最短路径P[v][w]及带权长度D[v][w]。 */    
 void ShortestPath_Floyd(MGraph G, Patharc *P, ShortPathTable *D)
 {    

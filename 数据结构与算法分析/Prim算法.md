@@ -14,7 +14,7 @@
     - 更新新加入顶点与其他未选顶点之间的边的权值。
 4. **重复上述步骤**，直到所有顶点都被加入生成树。
     
-```cpp
+```c
 /* Prim算法生成最小生成树  */
 void MiniSpanTree_Prim(MGraph G)
 {
@@ -68,7 +68,7 @@ void MiniSpanTree_Prim(MGraph G)
 - **更新邻接表中的权值**
     - 当一个顶点加入生成树时，更新其邻接顶点的权值，并将这些邻接顶点重新加入优先队列。
 %%
-```cpp
+```c
 #include <stdio.h>
 #include <stdlib.h>
 
