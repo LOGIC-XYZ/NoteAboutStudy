@@ -162,8 +162,85 @@ drwxr-xr-x 1 missing  users  4096 Jun 15  2019 missing
 - `-r`: 反向排序
 - `-R`: 递归列出
 
+# 文件操作
 ## `mv`
+**基本语法：**
+- `mv [选项] 源文件或目录 目标文件或目录`
 
-## `cp`
+### 主要功能
+1. **移动文件/目录到另一个位置**：
+```bash
+mv file.txt /path/to/new_directory/  # 将 file.txt 移动到 new_directory 目录
+mv my_dir /another/path/             # 将 my_dir 目录移动到 /another/path/
+```
+2. **重命名文件/目录**：
+```bash
+mv old_name.txt new_name.txt         # 将 old_name.txt 重命名为 new_name.txt
+mv my_old_dir my_new_dir             # 将 my_old_dir 重命名为 my_new_dir
+```
 
+### 常用选项
+- `-i` (interactive)：在覆盖现有文件之前进行提示确认。
+- `-u` (update)：只在源文件比目标文件新时才进行移动或覆盖。
+- `-v` (verbose)：显示移动过程的详细信息。
+
+## `cp
+**基本语法：**
+- `cp [选项] 源文件或目录 目标文件或目录`
+
+### 主要功能
+1. **复制文件**：
+```bash
+cp file.txt new_file.txt             # 复制 file.txt 并重命名为 new_file.txt
+cp file.txt /path/to/directory/      # 复制 file.txt 到指定目录 (保持原名)
+```
+2. **复制目录：** 复制目录时必须使用 `-r` 或 `-R` 选项（递归复制），否则 `cp` 命令无法复制目录。
+```bash
+cp -r my_directory new_directory_copy # 递归复制 my_directory 及其所有内容到 new_directory_copy
+```
+
+### 常用选项
+- `-r` 或 `-R` (recursive)：递归复制目录及其内容。**复制目录时必用。**
+- `-i` (interactive)：在覆盖现有文件之前进行提示确认。
+- `-u` (update)：只在源文件比目标文件新时才进行复制。
+- `-v` (verbose)：显示复制过程的详细信息。
+- `-a` (archive)：保留文件的所有属性（权限、时间戳、所有者、组等），并递归复制目录。常用于备份。
+
+## `rm`
+**基本语法：**
+- `rm [选项] 文件或目录...`
+
+### 主要功能
+1. **删除文件**：
+```bash
+rm file.txt                     # 删除 file.txt
+rm another_file.log temp_file.tmp # 同时删除多个文件
+```
+2. **删除目录：** 删除非空目录时必须使用 `-r` 或 `-R` 选项（递归删除）。
+```bash
+rm -r empty_directory           # 删除空目录（虽然也可以直接用 rm -d）
+rm -r my_old_directory          # 递归删除 my_old_directory 及其所有内容
+```
+
+### 常用选项
+- `-r` 或 `-R` (recursive)：递归删除目录及其内容。**删除目录时必用。**
+- `-f` (force)：强制删除，不提示确认。**请谨慎使用此选项，因为它具有破坏性。**
+- `-i` (interactive)：在删除每个文件或目录之前进行提示确认。**推荐在不确定时使用。**
+- `-v` (verbose)：显示删除过程的详细信息。
+（ps：远离`rm -rf`）
 ## `mkdir`
+**基本语法：**
+- `mkdir [选项] 目录名...`
+
+### 主要功能
+创建单个目录：
+```bash
+mkdir my_new_directory          # 在当前目录下创建 my_new_directory
+mkdir /home/user/documents/reports # 创建指定路径的目录 (前提是 /home/user/documents 已存在)
+```
+### 常用选项
+- `-p` (parents)：递归创建目录。如果父目录不存在，则一并创建。
+- `-v` (verbose)：显示创建过程的详细信息。
+- `-m` (mode)：在创建目录时直接设置其权限模式（例如 `mkdir -m 755 new_dir`）。
+
+# Connecting programs
