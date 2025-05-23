@@ -37,4 +37,37 @@ missing@MiZoRe:~$
 
 ## $PATH 环境变量
 Shell 通过查询`$PATH`环境变量来寻找程序进而执行。
+```sh
+missing:~$ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+missing:~$ which echo
+/bin/echo
+missing:~$ /bin/echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+```
+1. echo $PATH -- 查询 $PATH 环境变量中包含哪些目录。
+2. which echo -- 在 $PATH 环境变量中查找指定的程序。并输出第一个匹配程序的完整路径。
+3. /bin/echo $PATH -- 直接指定程序的完整路径来绕过 $PATH 的搜索机制，从而精确控制要执行的程序版本或位置。
+---
+为什么需要绕过`$PATH`？
+- **执行当前目录的脚本或程序：** 出于安全考虑，当前目录通常不在 `$PATH` 中。因此，如果想执行当前目录下的脚本或程序，就必须使用 `./` 前缀。
+- **执行特定版本的程序：** 如果系统上安装了同一个程序的多个版本（例如，不同的 Python 版本），可以通过指定完整路径来确保执行的是想要执行的版本。
+- **执行未添加到 `$PATH` 的程序：** 有些程序可能不会自动将其可执行文件添加到 `$PATH` 中的目录，此时就需要手动指定它们的路径来运行。
 
+## `type`命令
+`type` 命令比 `which` 命令**更全面**，因为它不仅仅查找可执行文件的路径，还会说明 Shell 如何解析和执行提供的命令，包括它是否是一个**别名、内建命令、函数或外部文件**。
+- **语法：** `type [options] name [name ...]`
+- **作用：** 显示 Shell 如何解释和查找指定的命令。
+---
+`type` 命令的输出类型
+- **alias (别名)：** 用户为另一个命令或命令序列创建的快捷方式。
+- **builtin (内建命令)：** Shell 自身提供的命令，不需要启动外部程序。这些命令直接由 Shell 解释执行，通常运行速度更快。
+- **function (函数)：** 用户在 Shell 配置文件或脚本中定义的 Shell 函数。
+- **file (文件/外部命令)：** 通过 `$PATH` 找到的可执行文件（二进制程序或脚本）。这是 `which` 命令主要查找的类型。
+- **keyword (关键字)：** Shell 语言中的保留字，例如 `if`, `for`, `while` 等。
+
+# Navigating in the shell
+shell 中的路径是一组被分割的目录，在 Linux 和 macOS 上使用 `/` 分割，而在 Windows 上是 `\`。
+以`/`（或Windows盘符如`C:\`）开头的为*绝对路径*，否则为*相对路径*。
+在路径中，`.` 表示的是当前目录，而 `..` 表示上级目录。
+pwd
