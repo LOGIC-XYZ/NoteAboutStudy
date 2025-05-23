@@ -23,5 +23,5 @@ Shell 脚本语言是一种解释型语言，可将一系列命令（ CLI 中输
 # Using the shell
 当启动终端时，会看到如下提示符：
 ```sh
-missing:~$
+missing@MiZoRe:~$
 ```
