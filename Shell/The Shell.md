@@ -291,7 +291,7 @@ touch my_file.txt # 更新 my_file.txt 的时间戳到当前时间
         # 将 holiday_plan.txt 的时间戳设置为 2023 年 12 月 25 日 10:30:00
 ```
 
-### `cat`
+## `cat`
 **基本语法**：
 - `cat [选项] [文件名...]`
 
@@ -408,4 +408,11 @@ sudo echo 3 > /sys/class/backlight/thinkpad_screen/brightness
 # open: Permission denied
 ```
 **原因在于：** 重定向操作 (`>`, `|`, `<`) 是由**你的 Shell (以当前用户权限运行)** 执行的，而不是由 `sudo` 提升权限的命令执行的。在 `echo` 运行前，Shell 已经尝试打开文件并被拒绝了。
+
 **解决方案**：
+```sh
+# 正确示例：tee 以 root 权限运行，能够写入文件
+echo 3 | sudo tee /sys/class/backlight/thinkpad_screen/brightness
+```
+这里 `echo 3` 的输出通过管道 (`|`) 传递给 `sudo tee`。`tee` 本身在 `sudo` 的作用下以 root 权限运行，因此它能成功打开并写入受保护的文件。
+
