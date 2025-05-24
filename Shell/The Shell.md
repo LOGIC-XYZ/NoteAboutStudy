@@ -93,7 +93,7 @@ missing:~$ ../../bin/echo hello
 hello
 ```
 ## `ls`
-```bash
+```sh
 ls               # 列出当前目录内容
 ls /home         # 列出 /home 目录内容
 ls -l            # 使用长列表格式显示
@@ -169,12 +169,12 @@ drwxr-xr-x 1 missing  users  4096 Jun 15  2019 missing
 
 ### 主要功能
 1. **移动文件/目录到另一个位置**：
-```bash
+```sh
 mv file.txt /path/to/new_directory/  # 将 file.txt 移动到 new_directory 目录
 mv my_dir /another/path/             # 将 my_dir 目录移动到 /another/path/
 ```
 2. **重命名文件/目录**：
-```bash
+```sh
 mv old_name.txt new_name.txt         # 将 old_name.txt 重命名为 new_name.txt
 mv my_old_dir my_new_dir             # 将 my_old_dir 重命名为 my_new_dir
 ```
@@ -190,12 +190,12 @@ mv my_old_dir my_new_dir             # 将 my_old_dir 重命名为 my_new_dir
 
 ### 主要功能
 1. **复制文件**：
-```bash
+```sh
 cp file.txt new_file.txt             # 复制 file.txt 并重命名为 new_file.txt
 cp file.txt /path/to/directory/      # 复制 file.txt 到指定目录 (保持原名)
 ```
 2. **复制目录：** 复制目录时必须使用 `-r` 或 `-R` 选项（递归复制），否则 `cp` 命令无法复制目录。
-```bash
+```sh
 cp -r my_directory new_directory_copy # 递归复制 my_directory 及其所有内容到 new_directory_copy
 ```
 
@@ -212,12 +212,12 @@ cp -r my_directory new_directory_copy # 递归复制 my_directory 及其所有�
 
 ### 主要功能
 1. **删除文件**：
-```bash
+```sh
 rm file.txt                     # 删除 file.txt
 rm another_file.log temp_file.tmp # 同时删除多个文件
 ```
 2. **删除目录：** 删除非空目录时必须使用 `-r` 或 `-R` 选项（递归删除）。
-```bash
+```sh
 rm -r empty_directory           # 删除空目录（虽然也可以直接用 rm -d）
 rm -r my_old_directory          # 递归删除 my_old_directory 及其所有内容
 ```
@@ -233,14 +233,72 @@ rm -r my_old_directory          # 递归删除 my_old_directory 及其所有内�
 - `mkdir [选项] 目录名...`
 
 ### 主要功能
-创建单个目录：
-```bash
+**创建目录**：
+```sh
 mkdir my_new_directory          # 在当前目录下创建 my_new_directory
+mkdir dir1 dir2 dir3            # 创建多个目录
 mkdir /home/user/documents/reports # 创建指定路径的目录 (前提是 /home/user/documents 已存在)
+mkdir -p /home/user/documents/reports # 递归创建多级目录, 如果上级目录不存在, 则会自动创建
 ```
 ### 常用选项
 - `-p` (parents)：递归创建目录。如果父目录不存在，则一并创建。
 - `-v` (verbose)：显示创建过程的详细信息。
 - `-m` (mode)：在创建目录时直接设置其权限模式（例如 `mkdir -m 755 new_dir`）。
 
+## `touch`
+**基本语法**：
+- `touch [选项] 文件名...`
+
+### 主要功能
+1. **创建新的空文件**
+```sh
+touch new_empty_file.txt        # 在当前目录下创建一个名为 new_empty_file.txt 的空文件
+touch /home/user/logs/daily.log # 在指定路径下创建空文件 (前提是 /home/user/logs 目录已存在)
+```
+2. **更新文件或目录的时间戳**
+```sh
+touch my_file.txt # 更新 my_file.txt 的时间戳到当前时间
+```
+
+### 常用选项
+- `-a` (access time)：只更新文件的**访问时间 (atime)**。
+- `-m` (modification time)：只更新文件的**修改时间 (mtime)**。
+- `-c` (no create)：如果文件不存在，**不创建新文件**。此选项通常与 `-a` 或 `-m` 结合使用。
+- `-r 参照文件` (reference)：使用**参照文件的时间戳**来更新目标文件的时间戳。目标文件的时间戳将与参照文件的时间戳相同。
+```sh
+        touch -r source_file.txt target_file.txt
+        # target_file.txt 的时间戳会变成 source_file.txt 的时间戳
+```
+- `-t STAMP` (timestamp)：使用指定的时间戳 `STAMP` 来更新文件的时间戳，而不是当前系统时间。`STAMP` 的格式通常是 `[[CC]YY]MMDDhhmm[.ss]`。
+        - `CC`：世纪（可选，默认为当前世纪）
+        - `YY`：年份的最后两位（可选，默认为当前年份）
+        - `MM`：月份（01-12）
+        - `DD`：日期（01-31）
+        - `hh`：小时（00-23）
+        - `mm`：分钟（00-59）
+        - `.ss`：秒（可选，00-61，包括闰秒）
+    - **示例：**
+```sh
+        touch -t 202401011200.00 old_file.txt
+        # 将 old_file.txt 的时间戳设置为 2024 年 1 月 1 日 12:00:00
+        touch -t 05241600 current_time.txt
+        # 将 current_time.txt 的时间戳设置为 5月24日 16:00 (使用当前年份)
+```
+- `-d 日期时间字符串` (date string)：与 `-t` 类似，但允许更灵活的日期时间格式，例如 `YYYY-MM-DD HH:MM:SS`。
+    - **示例：**
+```sh
+        touch -d "2023-12-25 10:30:00" holiday_plan.txt
+        # 将 holiday_plan.txt 的时间戳设置为 2023 年 12 月 25 日 10:30:00
+```
+
+### `cat`
+**基本语法**：
+- `cat [选项] [文件名...]`
+
+### 主要功能
+1. **显示文件内容**
+	```sh
+		cat myfile.txt           # 显示 myfile.txt 的内容
+		cat file1.txt file2.txt  # 依次显示 file1.txt 和 file2.txt 的内容
+    ```
 # Connecting programs
