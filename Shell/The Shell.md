@@ -297,8 +297,75 @@ touch my_file.txt # 更新 my_file.txt 的时间戳到当前时间
 
 ### 主要功能
 1. **显示文件内容**
-	```sh
+```sh
 		cat myfile.txt           # 显示 myfile.txt 的内容
 		cat file1.txt file2.txt  # 依次显示 file1.txt 和 file2.txt 的内容
-    ```
+ ```
+ 2. **连接文件**：将多个文件的内容按顺序连接起来，然后输出到标准输出。
+```sh
+		cat part1.txt part2.txt > combined.txt
+		# 将 part1.txt 和 part2.txt 的内容连接起来，并重定向到 combined.txt 文件中
+```
+
+### 常用选项
+- `-n` (number)：对所有输出行进行编号，从 1 开始。
+- `-b` (number nonblank)：与 `-n` 类似，但只对非空行进行编号。空行不编号。
+- `-s` (squeeze blank)：将连续的多个空行压缩成一个空行。
+- `-E` (show ends)： 在每行的末尾显示 `$` 符号，用于指示行的结束。这对于调试文件中的隐藏换行符或行尾空格非常有用。
+- `-T` (show tabs)：将制表符 (Tab) 显示为 `^I`。
+- `-v` (show non-printing)： 显示非打印字符。通常与其他选项结合使用，用于调试文件编码或隐藏字符。
+
 # Connecting programs
+在 shell 中，程序有两个主要的“流”：它们的输入流和输出流。 想象一下，每个 Shell 程序都像是一个小工厂：它们需要原材料（输入）来工作，然后生产出产品（输出）。默认情况下，键盘就是所有程序的原材料来源（输入），而显示器就是所有产品展示的出口（输出）。 Shell 允许更改这些“原材料”的来源和“产品”的去向，甚至可以将一个工厂的产品直接输送到另一个工厂作为原材料。
+## I/O 重定向：改变程序的输入和输出目的地
+- **`> file`：重定向标准输出到文件 (覆盖)** 这个符号告诉 Shell，把左边程序的**标准输出**不再打印到屏幕上，而是**写入**到指定的 `file` 中。如果 `file` 已经存在，它的内容会被**完全覆盖**。
+```sh
+    echo hello > hello.txt
+    # 这里的 'echo hello' 的输出是 'hello'。
+    # '>' 符号将这个 'hello' 从屏幕重定向到了 hello.txt 文件里。
+    
+    cat hello.txt
+    # 现在我们用 cat 命令来查看 hello.txt 的内容，确认 'hello' 已经写入。
+    # 输出：hello
+```
+    
+- **`< file`：重定向标准输入从文件** 这个符号告诉 Shell，把右边程序的**标准输入**不再从键盘获取，而是**从指定的 `file` 中读取**。
+```sh
+    cat < hello.txt
+    # 'cat' 命令通常默认从标准输入（键盘）或指定文件读取。
+    # 这里 '< hello.txt' 告诉 cat 从 hello.txt 文件中读取内容。
+    # 效果和 'cat hello.txt' 类似，都是显示文件内容。
+    # 输出：hello
+```
+    
+- **结合使用：`< input_file > output_file`** 甚至可以同时重定向一个程序的输入和输出。
+```sh
+    cat < hello.txt > hello2.txt
+    # 这里的 'cat' 命令从 hello.txt 读取内容（输入重定向）。
+    # 然后 '>' 符号将 'cat' 的输出（也就是 hello.txt 的内容）写入到 hello2.txt 中。
+    # 结果就是创建了一个 hello2.txt，内容与 hello.txt 相同。
+    
+    cat hello2.txt
+    # 输出：hello
+```
+    
+- **`>> file`：重定向标准输出到文件 (追加)** 如果不想覆盖现有文件的内容，而是想在文件末尾**添加**新的内容，就可以使用 `>>`。
+```sh
+    echo "This is a new line." >> hello.txt
+    # 这会将 "This is a new line." 添加到 hello.txt 的末尾，不会覆盖之前的内容。
+    
+    cat hello.txt
+    # 输出：
+    # hello
+    # This is a new line.
+```
+---
+
+## 管道 (`|`)：连接程序的输入与输出
+管道操作符 `|` 允许将**一个程序的标准输出，直接作为另一个程序的标准输入**。这就像在两个工厂之间搭建了一条传送带，一个工厂的产品（输出）立即变成了另一个工厂的原材料（输入），无需中间文件。
+**基本概念：** `command1 | command2`
+- `command1` 的输出 **不再显示在屏幕上**。
+- `command1` 的输出 **直接传递** 给 `command2` 作为输入。
+- `command2` 的输出 **正常显示在屏幕上**（除非它也被重定向）。
+
+# 
