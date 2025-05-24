@@ -69,6 +69,13 @@ missing:~$ /bin/echo $PATH
 - **file (文件/外部命令)：** 通过 `$PATH` 找到的可执行文件（二进制程序或脚本）。这是 `which` 命令主要查找的类型。
 - **keyword (关键字)：** Shell 语言中的保留字，例如 `if`, `for`, `while` 等。
 
+## `echo`命令
+用于输出字符串。Shell 会基于空格分割命令并解析，然后执行第一个单词代表的程序，并将后续单词作为参数。如果参数中包含空格，需要使用单引号 (`'`)、双引号 (`"`) 包裹，或使用反斜杠 (`\`) 进行转义。
+```sh
+echo "Hello world" # 输出 Hello world
+echo Hello\ world  # 输出 Hello world
+```
+
 # Navigating in the shell
 shell 中的路径是一组被分割的目录，在 Linux 和 macOS 上使用 `/` 分割，而在 Windows 上是 `\`。
 以`/`（或Windows盘符如`C:\`）开头的为*绝对路径*，否则为*相对路径*。
@@ -96,7 +103,6 @@ hello
 ```sh
 ls               # 列出当前目录内容
 ls /home         # 列出 /home 目录内容
-ls -l            # 使用长列表格式显示
 ls --help        # 查看 ls 命令的帮助
 ```
 ### `ls -l`
@@ -315,6 +321,8 @@ touch my_file.txt # 更新 my_file.txt 的时间戳到当前时间
 - `-T` (show tabs)：将制表符 (Tab) 显示为 `^I`。
 - `-v` (show non-printing)： 显示非打印字符。通常与其他选项结合使用，用于调试文件编码或隐藏字符。
 
+
+
 # Connecting programs
 在 shell 中，程序有两个主要的“流”：它们的输入流和输出流。 想象一下，每个 Shell 程序都像是一个小工厂：它们需要原材料（输入）来工作，然后生产出产品（输出）。默认情况下，键盘就是所有程序的原材料来源（输入），而显示器就是所有产品展示的出口（输出）。 Shell 允许更改这些“原材料”的来源和“产品”的去向，甚至可以将一个工厂的产品直接输送到另一个工厂作为原材料。
 ## I/O 重定向：改变程序的输入和输出目的地
@@ -375,9 +383,9 @@ touch my_file.txt # 更新 my_file.txt 的时间戳到当前时间
 `sudo`可以进行的操作：
 ```sh
 	# 安装、更新和删除软件
-	sudo apt install vim  # 安装 Vim 编辑器
 	sudo apt update       # 更新软件包列表
 	sudo apt upgrade      # 升级已安装的软件包到最新版本
+	sudo apt install vim  # 安装 Vim 编辑器
 	sudo apt remove vim   # 卸载 Vim
 
 	# 启动、停止或重启系统服务
