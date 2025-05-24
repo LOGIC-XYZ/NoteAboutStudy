@@ -368,4 +368,44 @@ touch my_file.txt # 更新 my_file.txt 的时间戳到当前时间
 - `command1` 的输出 **直接传递** 给 `command2` 作为输入。
 - `command2` 的输出 **正常显示在屏幕上**（除非它也被重定向）。
 
-# 
+# 根用户、`sudo` 命令与权限管理
+在类 Unix 系统中，**根用户 (root)** 几乎不受任何限制，但直接使用风险极高。通常用 **`sudo` 命令**，以当前用户身份临时获得 root 权限来执行特定操作，避免系统破坏。当遇到“**权限拒绝 (permission denied)**”错误时，往往是需要 `sudo`（super user do） 了。
+
+---
+`sudo`可以进行的操作：
+```sh
+	# 安装、更新和删除软件
+	sudo apt install vim  # 安装 Vim 编辑器
+	sudo apt update       # 更新软件包列表
+	sudo apt upgrade      # 升级已安装的软件包到最新版本
+	sudo apt remove vim   # 卸载 Vim
+
+	# 启动、停止或重启系统服务
+	sudo systemctl restart nginx  # 重启 Nginx 服务
+	sudo systemctl stop apache2   # 停止 Apache 服务
+	sudo systemctl start ssh      # 启动 SSH 服务
+
+	# 管理用户和权限
+	sudo useradd newuser       # 添加新用户
+	sudo passwd newuser        # 设置新用户密码
+	sudo userdel newuser       # 删除用户
+
+	# 修改文件权限
+	sudo chmod 755 /var/www/html  # 修改目录权限
+	sudo chown user:user file.txt # 修改文件所属用户
+
+	# 关机或重启系统
+	sudo shutdown -h now  # 立即关机
+	sudo reboot           # 立即重启
+```
+---
+有一件事情是必须作为根用户才能做的，那就是向 `sysfs` 文件写入内容。系统被挂载在 `/sys` 下，`sysfs` 文件则暴露了一些内核（kernel）参数。 因此，不需要借助任何专用的工具，就可以在运行期间配置系统内核。**注意 Windows 和 macOS 没有这个文件**
+但是`sudo command > file` 不能以 root 权限写入受保护的文件。
+```sh
+# 错误示例：Shell 试图以当前用户权限重定向，导致拒绝访问
+sudo echo 3 > /sys/class/backlight/thinkpad_screen/brightness
+# 输出：An error occurred while redirecting file 'brightness'
+# open: Permission denied
+```
+**原因在于：** 重定向操作 (`>`, `|`, `<`) 是由**你的 Shell (以当前用户权限运行)** 执行的，而不是由 `sudo` 提升权限的命令执行的。在 `echo` 运行前，Shell 已经尝试打开文件并被拒绝了。
+**解决方案**：
