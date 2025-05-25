@@ -181,7 +181,7 @@ drwxr-xr-x 1 missing  users  4096 Jun 15  2019 missing
 **基本语法：**
 - `mv [选项] 源文件或目录 目标文件或目录`
 
-### 主要功能
+### 基本用法
 1. **移动文件/目录到另一个位置**：
 ```sh
 mv file.txt /path/to/new_directory/  # 将 file.txt 移动到 new_directory 目录
@@ -202,7 +202,7 @@ mv my_old_dir my_new_dir             # 将 my_old_dir 重命名为 my_new_dir
 **基本语法：**
 - `cp [选项] 源文件或目录 目标文件或目录`
 
-### 主要功能
+### 基本用法
 1. **复制文件**：
 ```sh
 cp file.txt new_file.txt             # 复制 file.txt 并重命名为 new_file.txt
@@ -224,7 +224,7 @@ cp -r my_directory new_directory_copy # 递归复制 my_directory 及其所有�
 **基本语法：**
 - `rm [选项] 文件或目录...`
 
-### 主要功能
+### 基本用法
 1. **删除文件**：
 ```sh
 rm file.txt                     # 删除 file.txt
@@ -246,7 +246,7 @@ rm -r my_old_directory          # 递归删除 my_old_directory 及其所有内�
 **基本语法：**
 - `mkdir [选项] 目录名...`
 
-### 主要功能
+### 基本用法
 **创建目录**：
 ```sh
 mkdir my_new_directory          # 在当前目录下创建 my_new_directory
@@ -263,7 +263,7 @@ mkdir -p /home/user/documents/reports # 递归创建多级目录, 如果上级�
 **基本语法**：
 - `touch [选项] 文件名...`
 
-### 主要功能
+### 基本用法
 1. **创建新的空文件**
 ```sh
 touch new_empty_file.txt        # 在当前目录下创建一个名为 new_empty_file.txt 的空文件
@@ -309,7 +309,7 @@ touch my_file.txt # 更新 my_file.txt 的时间戳到当前时间
 **基本语法**：
 - `cat [选项] [文件名...]`
 
-### 主要功能
+### 基本用法
 1. **显示文件内容**
 ```sh
 		cat myfile.txt           # 显示 myfile.txt 的内容
@@ -341,7 +341,7 @@ touch my_file.txt # 更新 my_file.txt 的时间戳到当前时间
 ---
 **重要提示：** `tr` 命令通常从标准输入读取数据，并将结果输出到标准输出。这意味着它经常与管道符 `|` 结合使用。
 
-### 主要功能
+### 基本用法
 1. **字符转换**: 将输入流中 `<字符串1>` 中的字符一对一地映射并转换为 `<字符串2>` 中对应的字符。
 ```sh
     echo "hello world" | tr 'a-z' 'A-Z'   # 将小写字母转换为大写
@@ -382,7 +382,7 @@ echo "line1\n\nline2" | tr -s '\n' # 压缩连续的换行符
 **基本语法**：
 - `grep [选项] 模式 [文件...]`
 
-### 主要功能
+### 基本用法
 1. **在文件中搜索指定模式的文本**： `grep` 最核心的功能是从一个或多个文件中查找匹配指定“模式”（通常是正则表达式）的行，并将这些行打印到标准输出。
 ```sh
     grep "error" /var/log/syslog       # 在 syslog 文件中查找包含 "error" 的行
@@ -421,6 +421,58 @@ echo "line1\n\nline2" | tr -s '\n' # 压缩连续的换行符
 - `-o` (--only-matching)：**只显示匹配部分**。只输出匹配模式的文本部分，而不是整行。   
 
 ## `sort`
+**基本语法**：
+- `sort [选项] [文件...]`
+### 基本用法
+1. **对文件内容进行排序**： 对文本文件中的行进行排序。默认情况下，它会根据每行的ASCII值（字典序）进行升序排列。
+```sh
+    sort names.txt              # 对 names.txt 文件内容进行升序排序并输出
+    sort scores.txt > sorted_scores.txt # 排序并将结果重定向到新文件
+```
+2. **通过管道输入进行排序**： `sort` 经常与其它命令通过管道 `|` 结合使用，对前一个命令的输出结果进行排序。
+```sh
+    ls -l | sort -k 5n          # 根据文件大小（第5列，数值排序）对 ls -l 的输出进行排序
+    cat data.txt | sort -r      # 读取 data.txt 内容并进行逆序排序
+```
+3. **合并已排序的文件**： `sort` 也可以使用 `-m` 选项来合并多个已经排序的文件，并保持其排序顺序。
+```sh
+    sort -m sorted_file1.txt sorted_file2.txt # 合并两个已排序的文件
+```
+4. **去重并排序**： 使用 `-u` 选项时，`sort` 可以在排序的同时删除重复的行。
+```sh
+    sort -u unique_items.txt    # 排序并去除重复行
+```
+    
+### 常用选项
+- `-r, --reverse`: **逆序排序**。以降序（从大到小）排列结果。    ```
+- `-n, --numeric-sort`: **数值排序**。将每行内容解释为数值进行排序，而不是按字典序。这对于包含数字的行非常重要，可以避免 "10" 在 "2" 之前的错误排序。    ```
+- `-k, --key=KEYDEF`: **指定排序键**。根据行中的特定字段（列）进行排序。`KEYDEF` 的格式通常是 `F[.C][OPTS][,F[.C][OPTS]]`，其中 `F` 是字段号，`C` 是字符位置，`OPTS` 是排序选项。字段默认以空白字符分隔。
+    ```
+    # 假设文件 content.txt 内容为：
+    # apple 10
+    # banana 5
+    # cherry 15
+    sort -k 2n content.txt      # 根据第2列（数字）进行排序
+    # 结果：
+    # banana 5
+    # apple 10
+    # cherry 15
+    
+    sort -k 1,1r content.txt    # 根据第1列（整个字段，逆序）排序
+    ```
+- `-u` --unique：**去重**。在排序后，只保留唯一的行，删除重复的行。    ```
+- `-f`, --ignore-case：**忽略大小写**。在进行字典序比较时，将小写字母视为其对应的大写字母。    ```
+- `-b`, --ignore-leading-blanks：**忽略前导空白字符**。在比较行时，忽略每行开头（或字段开头）的空格和制表符。    ```
+- `-t`, --field-separator=SEP：**指定字段分隔符**。设置用于分隔字段的字符，默认为空白字符。
+- `-V`, --version-sort：**版本排序**。对版本号进行排序，例如 "v1.0", "v2.0", "v1.10" 会正确排序为 "v1.0", "v1.10", "v2.0"。
+- `-M`, --month-sort**月份排序**。将三字母的月份名称（如 Jan, Feb）识别为月份顺序。
+    ```
+    echo -e "Jan\nDec\nFeb" | sort -M # 结果：Jan, Feb, Dec
+    ```
+- `-h` --human-numeric-sort**人类可读的数值排序**。对带有单位（如 K, M, G）的数值进行排序（例如，`du -h` 的输出）。
+    ```
+    echo -e "1K\n2G\n100M" | sort -h # 结果：1K, 100M, 2G
+    ```
 
 ## `head`
 
