@@ -1,8 +1,7 @@
-时间             08:10
-星期五
-今天尝试跑包的时候，无论是roslaunch、rosbag还是roscore，都说命令没有找到，需要安装包（但是明明早安装好了ros，都已经用了好久）
+时间            2025.04.18
+起因：今天尝试跑包的时候，无论是roslaunch、rosbag还是roscore，都说命令没有找到，需要安装包（但是明明早安装好了ros，都已经用了好久）
 
-### 检查ROS环境变量
+### 解决路径：检查ROS环境变量
 #### **1. 确认当前使用的 Shell 类型**
 ```bash
 echo $SHELL
@@ -27,3 +26,5 @@ echo $SHELL
     source ~/.zshrc
 ```
 > 注意：Zsh 应使用 `setup.zsh` 而非 `setup.bash`，因为不同 Shell 的初始化脚本可能不同。
+
+#error #shell
