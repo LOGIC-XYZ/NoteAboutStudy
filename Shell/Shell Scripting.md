@@ -3,5 +3,13 @@
 本节以最常见的bash脚本为讲述重点
 
 ---
-# 变量赋值与字符串
-## 
+# 第一个 Shell
+```sh
+#!/bin/bash
+echo "HelloWorld！"
+```
+`#!` 告诉系统解释此脚本文件的 Shell 程序 `/bin/bash`，即指定使用的是哪种shell
+`echo`在终端打印出内容
+
+# 运行 Shell
+## 作为可执行程序
