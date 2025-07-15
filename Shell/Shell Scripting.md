@@ -105,5 +105,12 @@ my_array=(1 2 3 4 5)    # 整数数组
 ```
 
 ```bash
-
+declare -A associative_array
+associative_array["name"]="Astrid"
+associative_array["age"]=19
 ```
+#### 环境变量
+由操作系统或用户设置的特殊变量，用于配置  Shell 的行为和影响其执行环境
+
+#### 特殊变量
+
