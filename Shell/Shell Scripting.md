@@ -29,7 +29,7 @@ chmod +x ./<文件名>.sh    # 使脚本具有执行权限
 这种方式运行时，哪怕在第一行指定了解释器，也还是会用直接运行的解释器执行（所以可以不指定）
 
 # Shell 变量
-### 定义
+## 定义
 定义变量时，变量名不加 $ 符号（PHP语言需要）
 ```bash
 my_name="canvas"
@@ -49,7 +49,7 @@ for file in $(ls /etc)
 # 以上语句将 /etc 下目录的文件名循环出来
 ```
 
-### 使用
+## 使用
 使用变量时，在变量前加 $ 即可：
 ```bash
 my_name="canvas"
@@ -71,7 +71,7 @@ my_name="astrid"
 echo $my_name
 ```
 
-### 只读变量
+## 只读变量
 使用 readonly 命令可以将变量定义为只读变量，只读变量的值不能被改变，强行更改会报错
 ```bash
 #!/bin/bash
@@ -79,26 +79,26 @@ myUrl="https://www.google.com"
 readonly myUrl
 ```
 
-### 删除变量
+## 删除变量
 ```bash
 uset <变量名>
 ```
 变量被删除后不能再次使用，unset 命令不能删除只读变量
 
-### 变量类型
+## 变量类型
 以下为一些主要的类型
-#### 字符串变量
+### 字符串变量
 在 Shell 中，变量通常被视为字符串，可以用单引号 `'` 或双引号 `"` 来定义
 ```bash
 my_string='Helloworld!'
 my_string="Helloworld!"
 ```
-#### 整数变量
+### 整数变量
 可以使用 declare 或 typeset 命令来声明整数变量，这样的变量只包含整数值并且这样的声明告诉 Shell 将 my_integer 视为整数，如将非整数赋值给它，将会尝试将其转换为整数
 ```bash
 declare -i my_integer=17
 ```
-#### 数组变量
+### 数组变量
 数组可以是整数索引数组或关联数组
 ```bash
 my_array=(1 2 3 4 5)    # 整数数组
@@ -109,8 +109,24 @@ declare -A associative_array
 associative_array["name"]="Astrid"
 associative_array["age"]=19
 ```
-#### 环境变量
+### 环境变量
 由操作系统或用户设置的特殊变量，用于配置  Shell 的行为和影响其执行环境
+#### 查看和设置环境变量
+1. 查看所有环境变量
+	```bash
+	printenv        # 推荐
+	env             # 类似，常用于临时设置
+	set             # 显示所有变量（包括函数）
+	```
+2. 查看单个变量
+	```bash
+	echo $PATH
+	echo $HOME
+	```
 
-#### 特殊变量
+#### 设置环境变量
+1. 临时设置
+2. 
+
+### 特殊变量
 
