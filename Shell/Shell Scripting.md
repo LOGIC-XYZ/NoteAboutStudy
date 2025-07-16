@@ -48,6 +48,10 @@ for file in 'ls /etc'
 for file in $(ls /etc)
 # 以上语句将 /etc 下目录的文件名循环出来
 ```
+### 查看已定义的变量
+- `declare -p <varname>`: 显示变量属性和值
+- `env`: 显示所有已导出的环境变量
+- `set`: 显示所有Shell变量和函数 (输出多)
 
 ## 使用
 使用变量时，在变量前加 $ 即可：
@@ -78,10 +82,14 @@ echo $my_name
 myUrl="https://www.google.com"  
 readonly myUrl
 ```
+## 局部变量（函数内）
+```bash
+local my_var="value"
+```
 
 ## 删除变量
 ```bash
-uset <变量名>
+unset <变量名>
 ```
 变量被删除后不能再次使用，unset 命令不能删除只读变量
 
@@ -159,5 +167,114 @@ echo $DB_URL  # 有效
 ```
 %%
 
-### 特殊变量
+#### 在脚本中使用默认值
+有些环境变量不一定总存在，这时可设默认值：
+```bash
+#!/bin/bash
+echo "PORT=${PORT:-3000}"   # 如果 PORT 未定义，默认是 3000
+```
+还可以直接赋值（不修改原变量）：
+```bash
+name=${USER_NAME:-"anonymous"}
+echo "Hello $name"
+```
 
+### 特殊变量
+- `$0`: 脚本名称
+- `$1` 至 `$9`: 参数 (超过9个用 `${10}`)
+- `$@`: 所有参数，每个为独立字符串
+- `$*`: 所有参数，视为单个字符串
+- `$#`: 参数数量
+- `$?`: 上一个命令的返回码 (0为成功)
+- `$$`: 当前脚本的PID
+- `!!`: 上一条完整命令
+- `$_`: 上一个命令的最后一个参数
+
+## 单引号与双引号
+Bash 中的**字符串**可以用 `'` 和 `"` 分隔符定义，但它们并不等价。用 `'` 分隔的字符串是字面字符串，不会替换变量值；而用 `"` 分隔的字符串则会进行变量替换和命令替换。
+```bash
+foo=bar
+        echo "$foo"  # 输出 bar
+        echo '$foo'  # 输出 $foo
+        
+        # 命令替换也会在双引号中执行
+        echo "Today is $(date)" # 输出 Today is 07/16/2025 12:15:37
+        echo 'Today is $(date)' # 输出 Today is $(date)
+```
+
+
+# 控制流
+bash 支持**控制流**技术，包括 `if`、`case`、`while` 和 `for`。类似地，bash 有接收参数并能对其进行操作的**函数**。
+##### if 语句
+```bash
+# 基本语法
+if command_that_sets_exit_status; then
+    echo "Command succeeded"
+else
+    echo "Command failed"
+fi
+
+# 使用条件测试
+if [ -z "$string" ]; then
+    echo "String is empty"
+elif [ "$string" = "value" ]; then
+    echo "String equals 'value'"
+else
+    echo "String is not empty and not 'value'"
+fi
+```
+##### for 循环
+```bash
+# 遍历列表
+for item in apple banana cherry; do
+    echo "Fruit: $item"
+done
+
+# C风格循环
+for (( i=0; i<5; i++ )); do
+    echo "Counter: $i"
+done
+
+# 遍历文件
+for file in *.txt; do
+    echo "Processing $file"
+done
+```
+
+# Shell Globbing
+启动脚本时，通常会希望提供相似的参数。Bash有简化此操作的方法，通过执行**文件名展开**来展开表达式。这些技术通常被称为**Shell Globbing**。
+## 通配符 (Wildcards)
+当想要执行某种通配符匹配时，可以使用：
+- `?` 匹配单个字符
+- `*` 匹配任意数量的字符
+例如，给定文件 foo、foo1、foo2、foo10 和 bar：
+```bash
+# 删除 foo1 和 foo2（匹配单个字符）
+rm foo?
+
+# 删除所有以 foo 开头的文件（除了 bar）
+rm foo*
+```
+## 花括号展开 {}
+当一系列命令中有共同的子串时，可以使用花括号让bash自动展开：
+```bash
+# 将展开为 convert image.png image.jpg
+convert image.{png,jpg}
+
+# 将展开为三个文件的复制
+cp /path/to/project/{foo,bar,baz}.sh /newpath
+
+# Globbing技术可以组合使用
+mv *.{py,sh} folder
+
+# 序列展开
+# 创建 foo/a, foo/b, ..., foo/h, bar/a, bar/b, ..., bar/h
+mkdir foo bar
+touch {foo,bar}/{a..h}
+
+# 显示两个目录文件的差异
+touch foo/x bar/y
+diff <(ls foo) <(ls bar)
+```
+
+# 命令替换与进程替换

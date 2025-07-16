@@ -10,4 +10,3 @@
  - [Hello 算法](https://www.hello-algo.com/)
  - [YouWare Project - 9hnql9nqm0](https://www.yourware.so/project/9hnql9nqm0) -- 博主整理的[计算机教育中缺失的一课 · the missing semester of your cs education](https://missing-semester-cn.github.io/)的中文笔记
  - [Shell 教程 ](https://www.runoob.com/linux/linux-shell.html)
- - [一、基础知识 — KaliArch SHELL BLOG 1.0.0 documentation](https://myshell-note.readthedocs.io/en/latest/shell-01-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id3)
