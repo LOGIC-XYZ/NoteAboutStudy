@@ -39,11 +39,25 @@ echo "Helloworld!"    # 这也是注释，Shell只执行 echo 命令
 Shell 没有直接支持多行注释的语法，但可以使用其他方法来实现
 ```bash
 :<<EOF
-zhu'shi'ne
+注释内容
+不会执行
+     |\___/|
+    (= o_o =)
+    / >💻< \
+   (___/ \___) 
 EOF
 ```
-
----
+`:` 是一个空命令，不会执行 `<<EOF` 之后的内容，`EOF`也可以换成其他标识符，但首尾需一致，所以也可以这样
+```bash
+: '
+注释部分
+     |\___/|
+    (= o-o =)
+    / >💻< \
+   (___/ \___) 
+两只小猫有一处不同
+'
+```
 
 # Shell 变量
 ## 定义
@@ -142,7 +156,11 @@ declare -i my_integer=17
 ### 数组变量
 数组可以是整数索引数组或关联数组
 ```bash
-my_array=(1 2 3 4 5)    # 整数数组
+my_array=("1" 2 3 4)    # 整数数组
+# 数字下标定义数组
+array_name[0]=value0
+array_name[1]=value1
+array_name[2]=value2
 ```
 
 ```bash
@@ -150,6 +168,46 @@ declare -A associative_array
 associative_array["name"]="Astrid"
 associative_array["age"]=19
 ```
+#### 读取数组
+##### 整数索引数组
+```bash
+${array_name[index]}    # 一般格式
+```
+
+```bash
+# 实例
+echo "第一个元素为: ${my_array[0]}"  
+echo "第二个元素为: ${my_array[1]}"  
+echo "第三个元素为: ${my_array[2]}"  
+echo "第四个元素为: ${my_array[3]}"
+# 运行结果
+第一个元素为: 1
+第二个元素为: 2
+第三个元素为: 3
+第四个元素为: 4
+```
+##### 关联数组
+```bash
+array_name["index"]
+```
+##### 获取数组中的所有元素
+使用 @ 或 * 可以获取数组(两种数组都可以)中的所有元素
+```bash
+echo "数组的元素为: ${my_array[*]}"  
+echo "数组的元素为: ${my_array[@]}"
+```
+在数组名前加一个感叹号 ! 可以获取数组的所有键
+```bash
+echo "数组的键为: ${!site[*]}"  
+echo "数组的键为: ${!site[@]}"
+```
+##### 获取数组的长度
+在·数组名前加一个 # 可以获取数组的长度
+```bash
+echo "数组元素个数为: ${#my_array[*]}"  
+echo "数组元素个数为: ${#my_array[@]}"
+```
+
 ### 环境变量
 由操作系统或用户设置的特殊变量，用于配置  Shell 的行为和影响其执行环境
 #### 查看环境变量
@@ -223,6 +281,54 @@ echo "Hello $name"
 - `!!`: 上一条完整命令
 - `$_`: 上一个命令的最后一个参数
 
+# 运算符
+Shell 和其他编程语言一样，支持多种运算符，包括：
+- 算数运算符
+- 关系运算符
+- 布尔运算符
+- 字符串运算符
+- 文件测试运算符
+原生bash不支持简单的数学运算，但是可以通过其他命令来实现，例如 awk 和 expr，expr 最常用。
+## 算术运算符
+**注意**：
+ - 使用的是反引号 $`$ 而不是单引号 $'$
+```bash
+# 实例
+a=10  
+b=20  
+  
+val=`expr $a + $b`  
+echo "a + b : $val"  
+  
+val=`expr $a - $b`  
+echo "a - b : $val"  
+  
+val=`expr $a \* $b`  
+echo "a * b : $val"  
+  
+val=`expr $b / $a`  
+echo "b / a : $val"  
+  
+val=`expr $b % $a`  
+echo "b % a : $val"  
+  
+if [ $a == $b ]  
+then  
+   echo "a 等于 b"  
+fi  
+if [ $a != $b ]  
+then  
+   echo "a 不等于 b"  
+fi
+
+# 结果
+a + b : 30
+a - b : -10
+a * b : 200
+b / a : 2
+b % a : 0
+a 不等于 b
+```
 
 # 控制流
 bash 支持**控制流**技术，包括 `if`、`case`、`while` 和 `for`。类似地，bash 有接收参数并能对其进行操作的**函数**。
