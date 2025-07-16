@@ -423,44 +423,150 @@ echo "使用 (( )) 自增后: $num"
 echo "使用 (( )) 自减后: $num"
 ```
 
+# printf 命令
+**实际应用示例：**
+
+创建表格输出
+```bash
+#!/bin/bash
+# 表头
+printf "%-15s %10s %10s %10s\n" "Item" "Quantity" "Price" "Total"
+# 分隔线
+printf "%-15s %10s %10s %10s\n" "---------------" "----------" "----------" "----------"
+# 数据行
+printf "%-15s %10d %10.2f %10.2f\n" "Notebook" 3 2.50 7.50
+printf "%-15s %10d %10.2f %10.2f\n" "Pen" 5 1.20 6.00
+printf "%-15s %10d %10.2f %10.2f\n" "Eraser" 2 0.50 1.00
+# 总计行
+printf "%-15s %10s %10s %10.2f\n" "" "" "Total:" 14.50
+```
+进度条实现
+```bash
+#!/bin/bash
+for i in {1..20}; do
+    printf "\rProgress: [%-20s] %d%%" $(printf "%${i}s" | tr ' ' '#') $((i*5))
+    sleep 0.1
+done
+printf "\n"
+```
+颜色输出
+```bash
+#!/bin/bash
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+printf "${RED}Error:${NC} Something went wrong\n"
+printf "${GREEN}Success:${NC} Operation completed\n"
+```
+
+`%-10s`指一个宽度为10个字符（`-` 表示左对齐，没有表示右对齐）
 # 控制流
 bash 支持**控制流**技术，包括 `if`、`case`、`while` 和 `for`。类似地，bash 有接收参数并能对其进行操作的**函数**。
-##### if 语句
+#### if else
+##### if 
 ```bash
-# 基本语法
-if command_that_sets_exit_status; then
-    echo "Command succeeded"
-else
-    echo "Command failed"
-fi
-
-# 使用条件测试
-if [ -z "$string" ]; then
-    echo "String is empty"
-elif [ "$string" = "value" ]; then
-    echo "String equals 'value'"
-else
-    echo "String is not empty and not 'value'"
+if condition
+then
+    command1 
+    command2
+    ...
+    commandN 
 fi
 ```
-##### for 循环
+##### if else
 ```bash
-# 遍历列表
-for item in apple banana cherry; do
-    echo "Fruit: $item"
-done
+if condition
+then
+    command1 
+    command2
+    ...
+    commandN
+else
+    command
+fi
+```
+##### if else-if else
+```bash
+if condition1
+then
+    command1
+elif condition2 
+then 
+    command2
+else
+    commandN
+fi
+```
 
-# C风格循环
-for (( i=0; i<5; i++ )); do
-    echo "Counter: $i"
-done
-
-# 遍历文件
-for file in *.txt; do
-    echo "Processing $file"
+#### for 循环
+```bash
+for var in item1 item2 ... itemN
+do
+    command1
+    command2
+    ...
+    commandN
 done
 ```
 
+#### while 语句
+```bash
+while condition
+do
+    command
+done
+```
+
+#### until 循环
+ 循环执行一系列命令直至条件为 true 时停止，与 while 循环在处理方式上刚好相反
+```bash
+until condition
+do
+    command
+done
+```
+
+#### case ··· esac
+多选择语句，与其他语言中的 switch ... case 语句类似，是一种多分支选择结构，每个 case 分支用右圆括号开始，用两个分号 ;; 表示 break，即执行结束，跳出整个 case ... esac 语句，esac（就是 case 反过来）作为结束标记，可以用 case 语句匹配一个值与一个模式，如果匹配成功，执行相匹配的命令
+```bash
+case 值 in
+模式1)
+    command1
+    command2
+    ...
+    commandN
+    ;;
+模式2)
+    command1
+    command2
+    ...
+    commandN
+    ;;
+esac
+```
+取值后面必须为单词 **in**，每一模式必须以右括号结束。取值可以为变量或常数，匹配发现取值符合某一模式后，其间所有命令开始执行直至 ;;
+取值将检测匹配的每一个模式。一旦模式匹配，则执行完匹配模式相应命令后不再继续其他模式。如果无一匹配模式，使用星号 * 捕获该值，再执行后面的命令
+```bash
+# 实例
+echo '输入 1 到 4 之间的数字:'
+echo '你输入的数字为:'
+read aNum
+case $aNum in
+    1)  echo '你选择了 1'
+    ;;
+    2)  echo '你选择了 2'
+    ;;
+    3)  echo '你选择了 3'
+    ;;
+    4)  echo '你选择了 4'
+    ;;
+    *)  echo '你没有输入 1 到 4 之间的数字'
+    ;;
+esac
+```
+
+#### 跳出循环
+还是老朋友 break（终止所有循环） 和 continue（跳出当前循环）
 # Shell Globbing
 启动脚本时，通常会希望提供相似的参数。Bash有简化此操作的方法，通过执行**文件名展开**来展开表达式。这些技术通常被称为**Shell Globbing**。
 ## 通配符 (Wildcards)
