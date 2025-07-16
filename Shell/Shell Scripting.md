@@ -111,7 +111,7 @@ associative_array["age"]=19
 ```
 ### 环境变量
 由操作系统或用户设置的特殊变量，用于配置  Shell 的行为和影响其执行环境
-#### 读取环境变量
+#### 查看环境变量
 ```bash
 #!/bin/bash
 echo "当前用户是：$USER"
@@ -119,9 +119,45 @@ echo "当前目录是：$PWD"
 ```
 
 #### 设置环境变量
-1. 临时设置（当前终端有效）
+```bash
+export var2="world"  # 环境变量（会传递给子进程）
+```
+#### 传递环境变量
+```bash
+#!/bin/bash
+export MY_VAR="FromScript"
+./child_script.sh
+```
+child_script.sh
+```bash
+#!/bin/bash
+echo "MY_VAR is: $MY_VAR"    # 能读取上一级脚本用 export 传下来的变量
+```
 
-2. 
+#### 配置文件
+把脚本中的 **配置和逻辑分离**，使脚本更清晰、更易维护、更易复用。
+```bash
+# env.sh
+export SERVER_PORT=8080
+export DB_URL="localhost"
+
+# run.sh
+#!/bin/bash
+source ./env.sh
+echo "连接数据库：$DB_URL:$SERVER_PORT"
+```
+%% 
+`source` 命令的本质是在当前 shell 中运行另一个脚本时，不启动子进程
+```bash
+# 错误方式
+./env.sh   # 会启动子shell，变量定义对当前脚本无效
+echo $DB_URL  # 空的
+
+# 正确方式
+source ./env.sh
+echo $DB_URL  # 有效
+```
+%%
 
 ### 特殊变量
 
