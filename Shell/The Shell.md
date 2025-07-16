@@ -56,7 +56,7 @@ missing:~$ /bin/echo $PATH
 ---
 - 临时添加: `export PATH="/new/path:$PATH"`
 - 永久修改: 编辑 `~/.bashrc` 或 `~/.zshrc`
-### 3. 其他特殊==变量==
+### 3. 其他特殊变量
 - `$?`: 显示上一个命令的退出状态（0 表示成功，非 0 表示失败）。
 - `$1`, `$2`, ... , `$9`: 用于引用脚本或函数中的参数。
 - `$0`: 脚本名。
@@ -82,6 +82,28 @@ missing:~$ /bin/echo $PATH
 ```sh
 echo "Hello world" # 输出 Hello world
 echo Hello\ world  # 输出 Hello world
+```
+### 常用选项
+-n ：不换行输出
+-e ：启用转义字符解释（\n、\t、\v、\b、\r、\\ 这类的可以启用了）
+
+### 实际应用示例
+创建简单菜单
+```bash
+echo -e "\n\033[1mSystem Menu\033[0m"
+echo "1. Check disk space"
+echo "2. List running processes"
+echo "3. Show system info"
+echo -n "Please enter your choice [1-3]: "
+```
+进度条模拟
+```bash
+echo -n "Progress: ["
+for i in {1..20}; do
+    echo -n "#"
+    sleep 0.1
+done
+echo "] Done!"
 ```
 
 # 文件权限
