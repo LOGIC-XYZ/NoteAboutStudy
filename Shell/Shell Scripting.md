@@ -277,4 +277,51 @@ touch foo/x bar/y
 diff <(ls foo) <(ls bar)
 ```
 
-# 命令替换与进程替换
+# 命令输出复用
+Shell脚本中常见的需求是将命令的输出作为变量保存或用于其他命令的参数
+## 命令替换 (Command Substitution)
+使用 `$( CMD )` 语法将命令的输出捕获并替换：
+```bash
+# 捕获日期命令的输出
+current_date=$(date)
+echo "Today is $current_date"
+
+# 在for循环中使用命令输出（虽然不推荐用于文件名）
+for file in $(ls); do
+    echo "Found file: $file"
+done
+
+# 推荐的现代语法是 $(command)
+# 旧语法是反引号 `command`，但嵌套使用困难且有解析问题
+```
+## 进程替换 (Process Substitution)
+`<( CMD )` 会执行CMD并将其输出放在一个临时文件中，并将命令替换为该文件的名称：
+```bash
+# 比较两个目录的内容
+diff <(ls dir1) <(ls dir2)
+
+# 同时处理两个命令的输出
+comm <(sort file1) <(sort file2)
+
+# 将多个输出合并为一个输入
+cat <(grep 'error' logfile) <(grep 'warning' logfile) > filtered_logs.txt
+```
+这在命令期望通过文件而不是标准输入传递值时非常有用
+## 逻辑操作符
+退出码可用于条件性执行命令，使用 `&&` (与操作符) 和 `||` (或操作符)：
+```bash
+# 仅当命令成功时运行后续命令
+mkdir /tmp/test && cd /tmp/test
+
+# 当命令失败时提供后备命令
+grep 'pattern' file.txt || echo "Pattern not found"
+
+# 命令可以用分号分隔，无条件执行
+echo "First"; echo "Second"; echo "Third"
+
+# 实际例子
+false || echo "Oops, fail"  # 输出: Oops, fail
+true || echo "Won't be printed"  # 无输出
+true && echo "Things went well"  # 输出: Things went well
+false && echo "Won't be printed"  # 无输出
+```
