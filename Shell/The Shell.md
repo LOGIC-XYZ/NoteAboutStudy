@@ -286,7 +286,7 @@ mv my_old_dir my_new_dir             # 将 my_old_dir 重命名为 my_new_dir
 - `-u` (update)：只在源文件比目标文件新时才进行移动或覆盖。
 - `-v` (verbose)：显示移动过程的详细信息。
 
-## `cp
+## `cp`
 **基本语法：**
 - `cp [选项] 源文件或目录 目标文件或目录`
 
