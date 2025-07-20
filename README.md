@@ -10,3 +10,5 @@
  - [Hello 算法](https://www.hello-algo.com/)
  - [YouWare Project - 9hnql9nqm0](https://www.yourware.so/project/9hnql9nqm0) -- 博主整理的[计算机教育中缺失的一课 · the missing semester of your cs education](https://missing-semester-cn.github.io/)的中文笔记
  - [Shell 教程 ](https://www.runoob.com/linux/linux-shell.html)
+ - [Regex Learn](https://regexlearn.com/zh-cn) -- 正则表达式初步学习的一个网站（可以play一下）
+ - 
