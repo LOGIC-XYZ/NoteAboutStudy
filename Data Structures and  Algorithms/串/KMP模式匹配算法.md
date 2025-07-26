@@ -16,24 +16,51 @@ eg: $pattern[i] = abcabcabc$
 - `i`: 当前位置，正在处理的字符（从1开始，因为0的位置前面没有前缀）
 - `j`: 当前最长相等前后缀的“长度”（也是下一个要比较的下标）
 ```cpp
+while (j > 0 && pattern[i] != pattern[j]) {
+    j = next[j - 1]; // 回退
+}
 if (pattern[i] == pattern[j]) {
     // 说明前缀与后缀的下一个字符相同，可以扩展
     j++;
-    next[i] = j;
 }
+    next[i] = j;
 ```
 为什么这么比较呢？
 - 因为`pattern[0 ... j-1]` 是当前最长前后缀；
 - 因为要尝试把这个前后缀**扩展一位**（也就是尝试匹配 `pattern[j]` 和 `pattern[i]`）：
-    - 如果相等，说明最长前后缀可以扩展，`next[i] = j + 1`；
-    - 如果不等，要尝试缩短 `j`，直到它能和 `i` 对上（递归地回到更短的前后缀）。
+    - 如果相等，说明**最长前后缀可以扩展**，`next[i] = j + 1`；
+    - 如果不等，要尝试缩短 `j`，直到它能和 `i` 对上（**递归地回到更短的前后缀**）。
 以 `"abcabc"` 为例：
 ![[../../attachments/Pasted image 20250726161902.png]]
 
 ## 代码实现
 ##### cpp
 ```cpp
+vector<int> KMP(const string& text, const string& pattern, const vector<int>& next) {
+    vector<int> result;
+    int i = 0, j = 0;
 
+    while (i < text.size()) {
+        if (text[i] == pattern[j]) {
+            i++;
+            j++;
+        } 
+        else {
+            if (j != 0) {
+                j = next[j - 1];  // 回退
+            } 
+            else {
+                i++;
+            }
+        }
+
+        if (j == pattern.size()) {
+            result.push_back(i - j);  // 匹配成功的位置
+            j = next[j - 1];  // 为了找下一个匹配
+        }
+    }
+    return result;
+}
 ```
 ##### c语言
 ```c
