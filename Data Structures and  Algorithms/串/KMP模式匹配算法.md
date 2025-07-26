@@ -16,7 +16,7 @@ eg: $pattern[i] = abcabcabc$
 - `i`: 当前位置，正在处理的字符（从1开始，因为0的位置前面没有前缀）
 - `j`: 当前最长相等前后缀的“长度”（也是下一个要比较的下标）
 ```cpp
-while (j > 0 && pattern[i] != pattern[j]) {
+while (j >  && pattern[i] != pattern[j]) {
     j = next[j - 1]; // 回退
 }
 if (pattern[i] == pattern[j]) {
