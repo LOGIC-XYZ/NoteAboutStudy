@@ -27,4 +27,4 @@ echo $SHELL
 ```
 > 注意：Zsh 应使用 `setup.zsh` 而非 `setup.bash`，因为不同 Shell 的初始化脚本可能不同。
 
-#error #shell
+#error #shell #ROS
