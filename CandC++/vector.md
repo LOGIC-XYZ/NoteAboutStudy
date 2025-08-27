@@ -18,6 +18,7 @@
 
 #### `size()`
 返回当前有效元素数量
+若是`vector<vector<int>> matrix`，可通过`matrix[0].size()`返回内部长度
 
 ### 时间复杂度
 |操作|时间复杂度|说明|
