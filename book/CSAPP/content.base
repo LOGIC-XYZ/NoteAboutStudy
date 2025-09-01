@@ -5,9 +5,10 @@ filters:
 views:
   - type: table
     name: 表格
+    filters:
+      and:
+        - '!file.inFolder("study/book/CSAPP/labs")'
     order:
       - file.name
       - file.ctime
-    sort:
-      - property: file.name
-        direction: DESC
+    sort: []
