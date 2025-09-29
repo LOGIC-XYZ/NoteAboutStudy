@@ -86,11 +86,11 @@ TreeNode *leftRotate(TreeNode *node) {
 ### **右旋和左旋操作在逻辑上是镜像对称的，它们分别解决的两种失衡情况也是对称的**。(对调一下left与right即可)
 
 ### 先左旋后右旋
-先对 `child` 执行“左旋”，再对 `node` 执行“右旋”。![[attachments/Pasted image 20250406161714.png]]
+先对 `child` 执行“左旋”，再对 `node` 执行“右旋”。![[other/attachments/Pasted image 20250406161714.png]]
 ### 先右旋后左旋
-先对 `child` 执行“右旋”，再对 `node` 执行“左旋”。![[attachments/Pasted image 20250406161809.png]]
+先对 `child` 执行“右旋”，再对 `node` 执行“左旋”。![[other/attachments/Pasted image 20250406161809.png]]
 ### 旋转的选择
-![[attachments/Pasted image 20250406161856.png]]
+![[other/attachments/Pasted image 20250406161856.png]]
 
 | 失衡节点的平衡因子  | 子节点的平衡因子 | 应采用的旋转方法 |     |
 | ---------- | -------- | -------- | --- |

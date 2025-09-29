@@ -31,7 +31,7 @@ if (pattern[i] == pattern[j]) {
     - 如果相等，说明**最长前后缀可以扩展**，`next[i] = j + 1`；
     - 如果不等，要尝试缩短 `j`，直到它能和 `i` 对上（**递归地回到更短的前后缀**）。
 以 `"abcabc"` 为例：
-![[../../attachments/Pasted image 20250726161902.png]]
+![[02 - study/attachments/Pasted image 20250726161902.png]]
 
 ## 代码实现
 ##### cpp

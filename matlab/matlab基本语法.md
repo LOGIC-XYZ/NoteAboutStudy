@@ -1,5 +1,5 @@
 ## 常用运算符和特殊字符
-[[matlab运算符]]
+[[02 - study/matlab/matlab运算符]]
 
 | +   | 加; 加法运算符。              |
 | --- | ---------------------- |
@@ -25,7 +25,7 @@
 | ~=  | 不等于                    |
 
 ## 特殊变量和常量
-[[matlab变量]]
+[[02 - study/matlab/matlab变量]]
 
 | ans | 最近计算的答案。        |
 | --- | --------------- |
@@ -46,4 +46,4 @@ save myfile
 ```
 load myfile
 ```
-[[matlab命令]]
+[[02 - study/matlab/matlab命令]]

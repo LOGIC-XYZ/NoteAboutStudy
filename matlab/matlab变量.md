@@ -1,9 +1,9 @@
 - 变量在使用前必须具有值。
 - 当表达式返回未分配给任何变量的结果时，系统会将其分配给名为ans的变量，该变量可在以后使用。
---[[matlab数据类型]]
+--[[02 - study/matlab/matlab数据类型]]
 
 ## 我忘记了变量！
-[[matlab命令]]
+[[02 - study/matlab/matlab命令]]
 **who**命令显示已使用的所有变量名。
 ```
 who
@@ -59,7 +59,7 @@ clear       % it will delete all variables in the workspace
 ```
 
 ## 创建向量
-[[matlab向量]]
+[[02 - study/matlab/matlab向量]]
 
 向量是一维数字数组。MATLAB允许创建两种类型的向量
 - **Row vectors**（行向量） 通过将元素集括在方括号中并使用空格或逗号定界元素来创建。
@@ -89,7 +89,7 @@ clear       % it will delete all variables in the workspace
 - **Column vectors（列向量）** 通过将元素集括在方括号中并使用分号（;）分隔元素来创建。
 
 ## 创建矩阵
-[[matlab矩阵]]
+[[02 - study/matlab/matlab矩阵]]
 矩阵是数字的二维数组。
 
 在MATLAB中，通过以空格或逗号分隔的元素的顺序输入每一行来创建矩阵，并用分号分隔行的结尾。
@@ -106,7 +106,7 @@ m =
 ```
 
 ## 创建字符串
-[[matlab字符串]]
+[[02 - study/matlab/matlab字符串]]
 示例
 ```
 my_string = '(cainiaojc.com)'

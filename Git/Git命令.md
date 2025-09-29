@@ -1,4 +1,4 @@
-![[../attachments/Snipaste_2025-07-22_14-34-26.png]]
+![[02 - study/attachments/Snipaste_2025-07-22_14-34-26.png]]
 	
 ## 添加修改到暂存区
 ```sh
