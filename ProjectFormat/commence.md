@@ -54,4 +54,4 @@ enum UrlTableErrors { ...
 一般来说, 函数名的每个单词首字母大写，没有下划线。 对于首字母缩写的单词， 更倾向于将它们视作一个单词进行首字母大写 (例如, 写作 `StartRpc()` 而非 `StartRPC()`)
 
 # 注释
-[[02 - study/ProjectFormat/annotation|annotation]]
+[[NoteAboutStudy/ProjectFormat/annotation|annotation]]
