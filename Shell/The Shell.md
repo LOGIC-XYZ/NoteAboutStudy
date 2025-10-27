@@ -17,8 +17,8 @@ Command Line Interface 是一种通过文本命令与计算机系统交互的用
 ##  Shell
 Shell 是是位于用户和操作系统内核之间的一层软件。它是一个**命令解释器**，负责解析用户输入的命令（通过 CLI ），并将其传递给操作系统内核执行。Shell 还负责处理命令的输出，并将其显示给用户。
 与 Terminal 一样， Shell 是所有操作系统中的默认程序，也可以自主安装卸载，可以安装多个，并运行想运行的。而不同的 Shell 有不同的语法和特点，不同的操作系统可能默认安装的 Shell 也不同：win 的 PowerShell 还有 cmd.exe ， mac 的 Zsh 或者 Bash （旧版），而大多数 Linux 发行版用的是 Bash。
-Shell 是真正“理解”并“执行”你输入的命令的程序，它提供了多种功能。（[[NoteAboutStudy/Shell/Shell Tools]]）
-Shell 脚本语言是一种解释型语言，可将一系列命令（ CLI 中输入的）写入一个文本文件中，然后让 Shell 程序按照脚本内容执行，这就是 [[NoteAboutStudy/Shell/Shell Scripting]]。
+Shell 是真正“理解”并“执行”你输入的命令的程序，它提供了多种功能。（[[NoteAboutStudy/Shell/Shell Tools|Shell Tools]]）
+Shell 脚本语言是一种解释型语言，可将一系列命令（ CLI 中输入的）写入一个文本文件中，然后让 Shell 程序按照脚本内容执行，这就是 [[NoteAboutStudy/Shell/Shell Scripting|Shell Scripting]]。
 
 # Using the shell
 ## 理解提示符（Prompt）
