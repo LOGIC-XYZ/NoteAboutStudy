@@ -1,7 +1,8 @@
 filters:
   and:
-    - file.inFolder("study/book/CSAPP")
+    - file.inFolder("NoteAboutStudy/book/CSAPP")
     - file.name != "content.base"
+    - file.folder != "NoteAboutStudy/book/CSAPP/labs"
 views:
   - type: table
     name: 表格
