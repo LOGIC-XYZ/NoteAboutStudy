@@ -18,27 +18,12 @@ usage: conda-script.py [-h] [-v] [--no-plugins] [-V] COMMAND ... conda-script.py
 ```
 且`Conda module` 每次重启终端时自动创建 `alias`，因为输入 `Get-Command conda` 报如下错误：
 ```shell
-CommandType Name Version Source 
------------ ---- ------- ------ 
-Alias conda -> Invoke-Conda 0.0 Conda
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Alias           conda -> Invoke-Conda                              0.0        Conda
 ```
 #### 解决路径：
-1. 先在 `profile` 中加入以下两排以阻止 Conda module 自动创建 alias 
-	```
-	Remove-Module Conda -ErrorAction SilentlyContinue 
-	Remove-Item alias:conda -ErrorAction SilentlyContinue 
-	```
-2. 然后在这两排下面加入如下语句
-	```
-	# ---- Conda Hook ---- 
-	$condaProfile = "F:\Anaconda\shell\condabin\conda-hook.ps1" # 此处填入相应 ps1 的地址
-	if (Test-Path $condaProfile) {
-	    & $condaProfile | Out-Null
-	    & "F:\Anaconda\Scripts\conda.exe" activate base
-	} else {
-	    Write-Host "Conda hook not found, run 'conda init powershell'" -ForegroundColor Yellow
-	}
-	```
+
 
 
 #error 
