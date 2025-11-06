@@ -29,3 +29,8 @@ conda remove -n <环境名> --all
 conda list    # 当前环境
 conda list -n <环境名>    # 指定环境
 ```
+
+导出当前环境安装的包
+```sh
+conda list --export > requirements.txt
+```
