@@ -1,3 +1,7 @@
+---
+tags:
+  - matlab
+---
 colon(:)是在MATLAB中最有用的运算符[[NoteAboutStudy/matlab/matlab运算符]]之一。它用于创建向量[[NoteAboutStudy/matlab/matlab向量]]，下标数组[[NoteAboutStudy/matlab/matlab数组]]和**指定迭代**。
 如果要创建包含1到10的整数的行向量，请编写
 示例

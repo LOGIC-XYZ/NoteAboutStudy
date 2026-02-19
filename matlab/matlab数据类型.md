@@ -1,3 +1,7 @@
+---
+tags:
+  - matlab
+---
 - single -- 单精度数值数据
 - double -- 双精度数值数据
 - logical -- 逻辑值1或0，分别表示true和false

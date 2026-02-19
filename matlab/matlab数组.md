@@ -1,3 +1,7 @@
+---
+tags:
+  - matlab
+---
 ## MATLAB中的特殊数组
 zeros()函数创建一个全零的数组
 示例
