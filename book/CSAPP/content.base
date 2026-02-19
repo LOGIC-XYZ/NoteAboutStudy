@@ -12,4 +12,6 @@ views:
     order:
       - file.name
       - file.ctime
-    sort: []
+    sort:
+      - property: file.name
+        direction: ASC
