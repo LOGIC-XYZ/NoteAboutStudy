@@ -8,7 +8,13 @@
 如果是去做题（人工构建前缀表）
 eg: $pattern[i] = abcabcabc$
 ```txt
-前面三个没有一样的所以开头是000，然后abca，最前面的a和最后面的a一样，所以是1，abcab，最前面的ab和最后面的ab是一样的，所以是2，abcabc，前面的abc和后面的abc是一样的，所以是3，abcabca，前面从abca和后面的abca是一样的，所以是4，abcabcab，前面的abcab和后面的abcab，所以是5，abcabcabc，前面的abcabc和后面的abcabc是一样的，所以是6
+ - 前面三个没有一样的所以开头是000；
+ - 然后abca，最前面的a和最后面的a一样，所以是1；
+ - abcab，最前面的ab和最后面的ab是一样的，所以是2；
+ - abcabc，前面的abc和后面的abc是一样的，所以是3；
+ - abcabca，前面从abca和后面的abca是一样的，所以是4；
+ - abcabcab，前面的abcab和后面的abcab，所以是5；
+ - abcabcabc，前面的abcabc和后面的abcabc是一样的，所以是6；
 ```
 
 但是计算机做这个事，时间复杂度就很高了，毕竟它要一位一位去比较（还的是视觉系统啊）
@@ -109,7 +115,8 @@ int Index_KMP(String S, String T, int pos)
 }
 ```
 
-子串的首位与后续的某些字符相等，也可以省略，故改良为以下
+子串的首位与子串后续的某些字符相等，也可以省略（对于 `aaaaax` 之类的模式串），故改良为以下 `nextval` 数组：
+ - 计算出 `next` 值的同时，如果 a 位字符与它 `next` 值指向的 b 位字符相等，则该 a 位的 `nextval` 就指向 b 位 的 `nextval` 值如果不等，则该 a 位的 `nextval` 值就是它自己 a 位的 `next` 值；
 ```c
 /* 求模式串T的next函数修正值并存入数组nextval */
 void get_nextval(String T, int *nextval)
