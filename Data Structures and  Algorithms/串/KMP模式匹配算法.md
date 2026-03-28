@@ -116,7 +116,8 @@ int Index_KMP(String S, String T, int pos)
 ```
 
 子串的首位与子串后续的某些字符相等，也可以省略（对于 `aaaaax` 之类的模式串），故改良为 `nextval` 数组：
- - 计算出 `next` 值的同时，如果 a 位字符与它 `next` 值指向的 b 位字符相等，则该 a 位的 `nextval` 就指向 b 位 的 `nextval` 值如果不等，则该 a 位的 `nextval` 值就是它自己 a 位的 `next` 值；
+ - 计算出 `next` 值的同时，如果 a 位字符与它 `next` 值指向的 b 位字符相等，则该 a 位的 `nextval` 就指向 b 位 的 `nextval` 值；如果不等，则该 a 位的 `nextval` 值就是它自己 a 位的 `next` 值；
+ - 就是在 `next` 的基础上加一个判断，判断当前字符与前缀字符是否相等，相等则二者的 `nextval` 的值相同；如果不等就是 `next` 值；
 ```c
 /* 求模式串T的next函数修正值并存入数组nextval */
 void get_nextval(String T, int *nextval)
