@@ -1,4 +1,5 @@
-AVL树即是二叉搜索树，也是平衡二叉树。（所以是一种 balanced binary search tree）
+AVL树即是二叉搜索树，也是平衡二叉树。（所以是一种 `balanced binary search tree`）
+
 ## 常见术语
 ### 节点高度
 1. AVL树节点类
@@ -28,7 +29,7 @@ void updateHeight(TreeNode *node) {
 }
 ```
 ### 节点平衡因子
-balance factor -- 节点左子树的高度减去右子树的高度，同时规定空节点的平衡因子为 0。设平衡因子为$f$，则一棵AVL树的任意节点的平衡因都满足$-1 \leq f \leq 1$
+`balance factor` -- 节点左子树的高度减去右子树的高度，同时规定空节点的平衡因子为 0。设平衡因子为$f$，则一棵 AVL 树的任意节点的平衡因都满足$-1 \leq f \leq 1$
 获取节点平衡因子的函数
 ```cpp
 /* 获取平衡因子 */
@@ -41,13 +42,14 @@ int balanceFactor(TreeNode *node) {
 }
 ```
 ## AVL树旋转
-**旋转操作既能保持“二叉搜索树”的性质，也能使树重新变为“平衡二叉树”**。
+**旋转操作既能保持 “二叉搜索树” 的性质，也能使树重新变为 “平衡二叉树”**。
 将平衡因子绝对值 >1 的节点称为“失衡节点”。
 旋转操作分为：右旋、左旋、先右旋后左旋、先左旋后右旋；
+
 ### 右旋
 以失衡节点为根节点的子树，将该节点记为 `node` ，其**左**子节点记为 `child` ，执行“右旋”操作。
-1. 当`child`无**右**子节点，以`child`为原点，将`node`向**右**旋转，并用`child`替代以前`node`的位置，此时`node`为`child`的**右**子节点。
-2. 当`child`有**右**子节点（记为`grand_child`），需将`grand_child` 作为 `node` 的**左**子节点。
+1. 当 `child` 无**右**子节点，以 `child` 为原点，将 `node` 向**右**旋转，并用 `child` 替代以前 `node` 的位置，此时 `node` 为 `child` 的**右**子节点。
+2. 当 `child` 有**右**子节点（记为 `grand_child`），需将 `grand_child` 作为 `node` 的**左**子节点。
 ```cpp
 /* 右旋操作 */
 TreeNode *rightRotate(TreeNode *node) {
@@ -65,8 +67,8 @@ TreeNode *rightRotate(TreeNode *node) {
 ```
 ### 左旋
 以失衡节点为根节点的子树，将该节点记为 `node` ，其**右**子节点记为 `child` ，执行“左旋”操作。
-1. 当`child`无**左**子节点，以`child`为原点，将`node`向**左**旋转，并用`child`替代以前`node`的位置，此时`node`为`child`的**左**子节点。
-2. 当`child`有**左**子节点（记为`grand_child`），需将`grand_child` 作为 `node` 的**右**子节点。
+1. 当 `child` 无**左**子节点，以 `child` 为原点，将 `node` 向**左**旋转，并用 `child` 替代以前 `node` 的位置，此时 `node` 为 `child` 的**左**子节点。
+2. 当 `child` 有**左**子节点（记为 `grand_child`），需将 `grand_child` 作为 `node` 的**右**子节点。
 ```cpp
 /* 左旋操作 */
 TreeNode *leftRotate(TreeNode *node) {
@@ -83,7 +85,7 @@ TreeNode *leftRotate(TreeNode *node) {
 }
 ```
 
-### **右旋和左旋操作在逻辑上是镜像对称的，它们分别解决的两种失衡情况也是对称的**。(对调一下left与right即可)
+> **右旋和左旋操作在逻辑上是镜像对称的，它们分别解决的两种失衡情况也是对称的**。(对调一下 `left` 与 `right` 即可)
 
 ### 先左旋后右旋
 先对 `child` 执行“左旋”，再对 `node` 执行“右旋”。![[other/attachments/Pasted image 20250406161714.png]]
@@ -130,6 +132,7 @@ TreeNode *rotate(TreeNode *node) {
     return node;
 }
 ```
+
 ## AVL树常用操作
 ### 插入节点
 在 AVL 树中插入节点后，从该节点到根节点的路径上可能会出现一系列失衡节点。因此，**需要从这个节点开始，自底向上（递归）执行旋转操作，使所有失衡节点恢复平衡**。
