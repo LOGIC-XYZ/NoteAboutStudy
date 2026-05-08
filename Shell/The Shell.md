@@ -37,7 +37,7 @@ missing@MiZoRe:~$
 
 ## $PATH 环境变量
 ### 1. 当 Shell 执行某个指令，但是该指令并不是 Shell 所了解的编程关键字时，它会去查询**环境变量 `$PATH`**。`$PATH` 列出了当 Shell 接到某条指令时，进行程序搜索的路径，这些路径由 `:` 分割。
-```sh
+```
 missing:~$ echo $PATH
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 missing:~$ which echo
@@ -231,6 +231,7 @@ shell 中的路径是一组被分割的目录，在 Linux 和 macOS 上使用 `
 以`/`（或Windows盘符如`C:\`）开头的为*绝对路径*，否则为*相对路径*。
 在路径中，`.` 表示的是当前目录，而 `..` 表示上级目录。
 ## `cd`
+
 ```sh
 missing:~$ pwd                           # 显示当前工作目录
 /home/missing
